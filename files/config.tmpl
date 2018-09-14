@@ -23,7 +23,7 @@
 		"use_tls": false
 		{{end}}
 	},
-	{{ $db_driver := or (.Env.DB_DRIVER) ""}}
+	{{ $db_driver := or (.Env.DB_DRIVER) "sqlite"}}
 	{{if eq $db_driver "mysql"}}
 	"db_name": "mysql",
 	"db_path": "{{default .Env.DB_USER "root" }}:{{.Env.DB_PASS}}@tcp({{default .Env.DB_HOST "db" }}:{{ default .Env.DB_PORT "3306" }})/{{ default .Env.DB_NAME "gophish" }}?charset=utf8&parseTime=True&loc=Local",
