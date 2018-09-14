@@ -1,0 +1,36 @@
+{{ $admin_server_url := or (.Env.ADMIN_SERVER_URL) "0.0.0.0:3333"}}
+{{ $phish_server_url := or (.Env.PHISH_SERVER_URL) "0.0.0.0:80"}}
+{{ $admin_tls := eq (or (.Env.ADMIN_TLS) "") "true" }}
+{{ $phish_tls := eq (or (.Env.PHISH_TLS) "") "true" }}
+{
+	"admin_server": {
+		"listen_url": "{{$admin_server_url}}",
+		{{ if $admin_tls }}
+		"use_tls": true,
+		"cert_path": "{{.Env.ADMIN_CERT_FILE}}",
+		"key_path": "{{.Env.ADMIN_KEY_FILE}}"
+		{{else}}
+		"use_tls": false
+		{{end}}
+	},
+	"phish_server": {
+		"listen_url": "{{$phish_server_url}}",
+		{{ if $phish_tls }}
+		"use_tls": true,
+		"cert_path": "{{.Env.PHISH_CERT_FILE}}",
+		"key_path": "{{.Env.PHISH_KEY_FILE}}"
+		{{else}}
+		"use_tls": false
+		{{end}}
+	},
+	{{ $db_driver := or (.Env.DB_DRIVER) ""}}
+	{{if eq $db_driver "mysql"}}
+	"db_name": "mysql",
+	"db_path": "{{.Env.DB_USER}}:{{.Env.DB_PASS}}@tcp({{default .Env.DB_HOST "db" }}:{{ default .Env.DB_PORT "3306" }})/{{ default .Env.DB_NAME "gophish" }}?charset=utf8&parseTime=True&loc=Local",
+	{{else}}
+	"db_name": "sqlite3",
+	"db_path": "{{ default .Env.DB_FILE "gophish.db"}}",
+	{{end}}
+	"migrations_prefix": "db/db_",
+	"contact_address": "{{.Env.CONTACT_ADDRESS}}"
+}
