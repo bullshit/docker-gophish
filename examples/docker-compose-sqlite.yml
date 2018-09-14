@@ -3,8 +3,7 @@ version: '3.1'
 services:
 
   frontend:
-    build: 
-      context: ../
+    image: bullshit/gophish:latest
     environment:
       CONTACT_ADDRESS: "phising@example.tld"
     ports:

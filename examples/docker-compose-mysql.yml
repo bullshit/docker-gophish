@@ -10,8 +10,7 @@ services:
       MYSQL_DATABASE: gophish
 
   frontend:
-    build: 
-      context: ../
+    image: bullshit/gophish:latest
     environment:
       CONTACT_ADDRESS: "phising@example.tld"
       DB_DRIVER: mysql
