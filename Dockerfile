@@ -1,5 +1,5 @@
 FROM debian:stretch
-MAINTAINER Matteo Guglielmetti <matteo.guglielmetti@hotmail.it>
+MAINTAINER Oskar Holowaty <coding@holowaty.me>
 
 EXPOSE 3333 80
 
